@@ -22,6 +22,7 @@ export function load() {
 		`Girl moment`,
 		`Gay people!!`,
 		`this is a really long message that takes up a ton of space on the screen. It's a lot of words! I got really bored when typing this out. I'm not really sure what else to say here, but it still needs to be longer. How is your day, fellow human? Let me know if you read this whole thing! Ping me on discord, I'm @cobular. I really should have gotten chatgpt to write this for me, but you can rest easy knowing that a real human typed out this whole thing. How is your day going? I hope it's going well. Go have fun making something fun today!!`,
+		`removed<br /><span class="sm:text-sm">herobrine</span>`,
 		`So fast!!!!!!!!!!!!!!!!!!!!!!!!<br />!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!`,
 	];
 
