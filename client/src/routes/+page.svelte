@@ -8,14 +8,17 @@
 	import FileSelect from '../lib/components/FileSelect.svelte';
 	import StepCounter from '../lib/components/StepCounter.svelte';
 	import { useMachine } from '@xstate/svelte';
+	import type { PageData } from './$types';
+
+	export let data: PageData;
 
 	let { state, send } = useMachine(file_upload_machine, {
 		logger: (...args) => {
 			if (dev) {
-				console.log(args[0], {metadata: args[1]});
+				console.log(args[0], { metadata: args[1] });
 			} else if (args[0] !== undefined && args[1] !== undefined && typeof args[1] === 'string') {
 				// Log with umami
-				umami_event(args[0], {metadata: args[1]});
+				umami_event(args[0], { metadata: args[1] });
 			}
 		}
 	});
@@ -35,7 +38,7 @@
 					<p
 						class="font-minecraft text-xs bg-yellow-100 drop-shadow-md rounded-lg p-3 py-2 pb-4 pt-2 z-10 animate-bounce text-slate-900						"
 					>
-						Now with<br /><span class="sm:text-sm">multi-file uploads!</span>
+						{@html data.text}
 					</p>
 				</div>
 				<div class="card-body max-w-sm w-screen gap-4">
