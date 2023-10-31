@@ -9,14 +9,21 @@ use tauri_plugin_log::LogTarget;
 use window_shadows::set_shadow;
 
 mod commands;
+mod events;
 
 fn main() {
-    tauri::Builder::default()
-        .plugin(
+    let builder = tauri::Builder::default();
+
+    #[cfg(not(target_os = "macos"))]
+    {
+        builder.plugin(
             tauri_plugin_log::Builder::default()
                 .targets([LogTarget::LogDir, LogTarget::Stdout, LogTarget::Webview])
                 .build(),
         )
+    }
+
+    builder
         .setup(|app| {
             let window = app.get_window("main").unwrap();
             set_shadow(&window, true).expect("Unsupported platform!");

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { FirestoreReadable } from '$lib/firestore';
 	import { collection, CollectionReference, query, type DocumentChange } from 'firebase/firestore';
-	import { readable, type Readable } from 'svelte/store';
+	import { readable, writable, type Readable } from 'svelte/store';
 	import { onMount } from 'svelte';
 	import { firestore } from '../lib/firebase';
 	import type { DocumentData } from 'makersync-common/types';
@@ -10,19 +10,21 @@
 	import FloatingQr from '$lib/components/FloatingQR.svelte';
 	import { slide } from 'svelte/transition';
 	import { prevent_close } from '$lib/prevent_close';
-	import { emit } from '@tauri-apps/api/event';
+	import { emit, listen } from '@tauri-apps/api/event';
 
 	import { trace, info, error, attachConsole } from 'tauri-plugin-log-api';
 	import Main from '$lib/components/Main.svelte';
 	import type { AlertData } from '$lib/types';
 	import { hover_store } from '$lib/stores/hover_store';
 	import DragDropOverlay from '$lib/components/DragDropOverlay.svelte';
+	import type { Progress } from '$lib/stores/progress_store';
 
 	const files_ref = query<DocumentData>(
 		collection(firestore, '/files') as unknown as CollectionReference<DocumentData>
 	);
 
 	let files_store: Readable<DocumentData[]> = readable([]);
+	let progress_store: Readable<Progress> = writable(undefined);
 
 	let alerts: AlertData[] = [];
 
@@ -59,23 +61,25 @@
 		files_store = files;
 
 		// Once every 4 hours, check for an update
-		const update_interval = setInterval(async function() {
-			await emit("tauri://update");
+		const update_interval = setInterval(async function () {
+			await emit('tauri://update');
 		}, 4 * 60 * 60 * 1000); // 4 hours in milliseconds
+
+		// listen to the `click` event and get a function to remove the event listener
+		// there's also a `once` function that subscribes to an event and automatically unsubscribes the listener on the first event
+		const unlisten = await listen('download-status', (event) => {
+			$progress_store = event.payload;
+		});
 
 		return () => {
 			detach();
 			clearInterval(update_interval);
+			unlisten();
 		};
 	});
 </script>
 
-<!-- {#if $hover_store} -->
-{#if true}
-	<DragDropOverlay />
-{/if}
-
-<Main files={$files_store} />
+<Main files={$files_store} progress={$progress_store} />
 <FloatingQr />
 
 <div class="toast toast-start">

@@ -1,4 +1,4 @@
-<?if $(sys.BUILDARCH)="x86"?>
+<!-- <?if $(sys.BUILDARCH)="x86"?>
     <?define Win64 = "no" ?>
     <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
 <?elseif $(sys.BUILDARCH)="x64"?>
@@ -320,4 +320,4 @@
 
         <SetProperty Id="ARPINSTALLLOCATION" Value="[INSTALLDIR]" After="CostFinalize"/>
     </Product>
-</Wix>
+</Wix> -->

@@ -7,13 +7,14 @@
   },
   "package": {
     "productName": "MakerSync",
-    "version": "0.2.7"
+    "version": "0.2.8"
   },
   "tauri": {
     "allowlist": {
       "all": false,
       "window": {
-        "startDragging": true
+        "startDragging": true,
+        "all": true
       },
       "path": {
         "all": true
