@@ -17,8 +17,6 @@ export async function upload_file(
 			token: token
 		});
 
-		
-
 	const totalBytes = file.size;
 
 	await axios.put(dest_url, file, {

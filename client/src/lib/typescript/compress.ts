@@ -13,7 +13,6 @@ export async function compress_files(files: File[], onProgress: OnProgress, comp
 		bufferedWrite: true,
 	});
 
-
   const total_size = files.reduce((acc, file) => acc + file.size, 0);
 
   function make_tuple(file: File): [File, number] {

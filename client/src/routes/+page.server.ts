@@ -1,3 +1,5 @@
+export const prerender = true;
+
 /** @type {import('./$types').PageLoad} */
 export function load() {
 	let text: string;
@@ -7,7 +9,6 @@ export function load() {
 		`MAKER<br /><span class="sm:text-sm">SPACE!!!</span>`,
 		`SPACER<br /><span class="sm:text-sm">MAKE!!!</span>`,
 		`So fast!!!`,
-		`Tenth upload free!`
 	];
 
 	const rare_texts = [
@@ -24,13 +25,14 @@ export function load() {
 		`this is a really long message that takes up a ton of space on the screen. It's a lot of words! I got really bored when typing this out. I'm not really sure what else to say here, but it still needs to be longer. How is your day, fellow human? Let me know if you read this whole thing! Ping me on discord, I'm @cobular. I really should have gotten chatgpt to write this for me, but you can rest easy knowing that a real human typed out this whole thing. How is your day going? I hope it's going well. Go have fun making something fun today!!`,
 		`removed<br /><span class="sm:text-sm">herobrine</span>`,
 		`So fast!!!!!!!!!!!!!!!!!!!!!!!!<br />!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!`,
-		`You've just been timmed :P`,
+		`You've just been TIMed :P`,
 		`I'm a computer!`,
 		`Don't forget to swipe in!`,
 		`Hello there Charly`,
 		`You're our one millionth visitor! Click here to claim your prize!`,
 		`May I see you in my office?`,
-		`I'm not allowed to make this joke anymore :(`
+		`I'm not allowed to make this joke anymore :(`,
+		`Tenth upload free!`,
 	];
 
 	// 90% chance to choose one from common_texts, 10% chance to choose one from rare_texts
