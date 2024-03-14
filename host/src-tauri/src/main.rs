@@ -16,7 +16,7 @@ fn main() {
 
     #[cfg(not(target_os = "macos"))]
     {
-        builder.plugin(
+        let builder = builder.plugin(
             tauri_plugin_log::Builder::default()
                 .targets([LogTarget::LogDir, LogTarget::Stdout, LogTarget::Webview])
                 .build(),
