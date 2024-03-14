@@ -20,7 +20,7 @@ fn main() {
             tauri_plugin_log::Builder::default()
                 .targets([LogTarget::LogDir, LogTarget::Stdout, LogTarget::Webview])
                 .build(),
-        )
+        );
     }
 
     builder
