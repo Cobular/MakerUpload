@@ -64,7 +64,13 @@ async function handler(
   console.log("Deleted all entries in R2");
 
   // Delete all entries in firebase
-  const document_refs = docs_to_delete.map((doc) => doc.name);
+  let document_refs = docs_to_delete.map((doc) => doc.name);
+  console.log("There are " + document_refs.length + " documents to delete");
+  if (document_refs.length > 20) {
+    console.log("Only deleting first 20 documents");
+    document_refs = document_refs.slice(0, 20);
+  }
+
   console.log("Deleting " + document_refs.length + " documents from firebase");
 
   await Promise.all(
@@ -81,7 +87,7 @@ async function handler(
 
 const headers = {
   Authorization:
-    "DSN https://bac4d51d022046fb8e5411656a8fbbc3@o4504879295627264.ingest.sentry.io/4504879441969152",
+    `DSN https://bac4d51d022046fb8e5411656a8fbbc3@o4504879295627264.ingest.us.sentry.io/4504879441969152`,
   'Content-Type': 'application/json; charset=UTF-8',
 };
 const monitor_id = "526026b2-88c3-45fa-9726-bba84b061761"; // Write your monitor_id here
@@ -93,46 +99,51 @@ export default {
     env: Env,
     ctx: ExecutionContext
   ): Promise<void> {
+    console.log("HANDLER")
     const sentry = new Toucan({
       dsn: env.SENTRY_DSN,
       release: "1.0.0",
       context: ctx,
     });
 
+
     try {
+      // CRON MANAGEMENT BROKE :(
+      
       // Create the check-in
-      var startDate = new Date();
-      const json_data = { status: "in_progress" };
-      const create_checkin_response = await fetch(
-        `https://sentry.io/api/0/organizations/${org_slug}/monitors/${monitor_id}/checkins/`,
-        {
-          method: "POST",
-          headers: headers,
-          body: JSON.stringify(json_data),
-        }
-      );
-      if (!create_checkin_response.ok) {
-        console.error(await create_checkin_response.text());
-        throw new Error(
-          `HTTP error! Status: ${create_checkin_response.status}`
-        );
-      }
+      // var startDate = new Date();
+      // const json_data = { status: "in_progress" };
+      // const create_checkin_response = await fetch(
+      //   `https://sentry.io/api/0/organizations/${org_slug}/monitors/${monitor_id}/checkins/`,
+      //   {
+      //     method: "POST",
+      //     headers: headers,
+      //     body: JSON.stringify(json_data),
+      //   }
+      // );
+
+      // if (!create_checkin_response.ok) {
+      //   console.error("Error checking into sentry! Code:", create_checkin_response.status, await create_checkin_response.text());
+      //   throw new Error(
+      //     `HTTP error! Status: ${create_checkin_response.status}`
+      //   );
+      // }
 
       await handler(controller, env, ctx);
 
-      var endDate = new Date();
-      const update_data = {
-        status: "ok",
-        duration: endDate.getTime() - startDate.getTime(),
-      };
-      const update_checkin_response = await fetch(
-        `https://sentry.io/api/0/organizations/${org_slug}/monitors/${monitor_id}/checkins/latest/`,
-        {
-          method: "PUT",
-          headers: headers,
-          body: JSON.stringify(update_data),
-        }
-      );
+      // var endDate = new Date();
+      // const update_data = {
+      //   status: "ok",
+      //   duration: endDate.getTime() - startDate.getTime(),
+      // };
+      // const update_checkin_response = await fetch(
+      //   `https://sentry.io/api/0/organizations/${org_slug}/monitors/${monitor_id}/checkins/latest/`,
+      //   {
+      //     method: "PUT",
+      //     headers: headers,
+      //     body: JSON.stringify(update_data),
+      //   }
+      // );
     } catch (e) {
       sentry.captureException(e);
     }

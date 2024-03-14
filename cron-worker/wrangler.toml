@@ -20,4 +20,4 @@ preview_bucket_name = "preview-makerspace-file-cache-bucket"
 
 [vars]
 FIREBASE_PROJECT_ID = "makersync-eef57"
-SENTRY_DSN = "https://bac4d51d022046fb8e5411656a8fbbc3@o4504879295627264.ingest.sentry.io/4504879441969152"
+SENTRY_DSN = "https://bac4d51d022046fb8e5411656a8fbbc3@o4504879295627264.ingest.us.sentry.io/4504879441969152"

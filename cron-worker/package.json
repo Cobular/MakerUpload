@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "wrangler dev",
+    "start": "wrangler dev --test-scheduled",
     "deploy": "wrangler publish && pnpm create-sentry-release",
     "create-sentry-release": "pnpm sentry-cli releases new \"1.0.1\" --finalize && pnpm sentry-cli releases files \"1.0.1\" upload-sourcemaps ./dist" 
   },

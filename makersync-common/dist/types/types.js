@@ -13,7 +13,7 @@ function IsFirestoreDocumentList(value) {
   return Array.isArray(value) && value.every((item) => IsFirestoreDocument(item));
 }
 
-const target_machines = ["3DPrinter", "Sewing", "MachineShop"];
+const target_machines = ["3DPrinter", "Sewing", "MachineShop", "Embroidery"];
 function IsTargetMachine(value) {
   return typeof value === "string" && target_machines.includes(value);
 }
