@@ -48,7 +48,8 @@
 	let should_show_progress: undefined | number = undefined;
 
 	$: {
-		if (progress !== undefined && progress.file_name == file.name && progress.progress < 100) {
+		console.log({progress, file})
+		if (progress !== undefined && progress.file_name === file.name && progress.progress < 100) {
 			should_show_progress = progress.progress;
 		} else {
 			setTimeout(() => {
@@ -72,7 +73,9 @@
 			<div class="badge badge-outline ml-auto">{file.target_machine}</div>
 		</div>
 		{#if should_show_progress !== undefined}
-			<progress class="progress progress-success w-56" out:slide value={should_show_progress} max="100" />
+			<progress class="progress progress-success w-56 bg-base-100" value={should_show_progress} max="100" />
+		{:else}
+			<progress class="progress progress-success w-56 bg-base-100" value={0} max="100" />
 		{/if}
 	</div>
 </div>
